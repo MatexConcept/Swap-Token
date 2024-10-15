@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.27;
 
-import {IERC20} from "./Tokens.sol";
+import {IERC20} from "./IToken.sol";
 
 contract SwapToken {
      IERC20 public tokenA; 
@@ -30,7 +30,7 @@ contract SwapToken {
         uint256 amountB = amountA * tokenASwapRate;
 
         
-        require(tokenB.balanceOf(address(this)) >= amountB, "Not enough Token B in contract");
+        require(tokenA.balanceOf(msg.sender) >= amountA, "Not enough Token B in contract");
 
        
         require(tokenA.transferFrom(msg.sender, address(this), amountA), "Token A transfer failed");
@@ -44,7 +44,7 @@ contract SwapToken {
         uint256 amountA = amountB / tokenBSwapRate;
 
        
-        require(tokenA.balanceOf(address(this)) >= amountA, "Not enough Token A in contract");
+        require(tokenB.balanceOf(msg.sender) >= amountB, "Not enough Token A in contract");
 
        
         require(tokenB.transferFrom(msg.sender, address(this), amountB), "Token B transfer failed");
@@ -57,4 +57,11 @@ contract SwapToken {
 
  }
 
+
+
+
+   
+
+
+ 
 
